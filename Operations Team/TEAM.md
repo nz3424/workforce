@@ -1,8 +1,8 @@
 # Operations Team
 
-> **Scope:** Day-to-day logistics — Canvas tracking, weekly planning,
-> and standup prep. This team keeps Nick organized and prevents things
-> from falling through the cracks.
+> **Scope:** Day-to-day logistics — Canvas tracking, task management,
+> weekly planning, and standup prep. This team keeps Nick organized
+> and prevents things from falling through the cracks.
 
 ---
 
@@ -19,6 +19,7 @@ format Nick can act on in under 2 minutes.
 | Agent | Folder | Primary job |
 |---|---|---|
 | Canvas Sweep | `agents/canvas-sweep/` | Scrapes Canvas course pages and modules for tasks and deadlines |
+| Task Planner | `agents/task-planner/` | Adds, sweeps, and surfaces tasks in Notion |
 | Weekly Review | `agents/weekly-review/` | Sunday planning digest — week behind, week ahead, open threads |
 | Standup Prep | `agents/standup-prep/` | Generates daily standup summary for the new job |
 
@@ -32,6 +33,7 @@ format Nick can act on in under 2 minutes.
 | **No emoji** | Never include emoji in any output |
 | **Concise** | Task lists and summaries only — no preamble, no padding |
 | **Propose, don't act** | Never modify calendar or send messages without Nick's approval |
+| **Confirm before writing** | Task Planner must show a preview before committing sweep results to Notion |
 | **Save outputs** | Persistent outputs go to `Operations Team/outputs/` |
 
 ---
@@ -45,6 +47,7 @@ YYYY-MM-DD_[agent-name]-[descriptor].md
 Examples:
 ```
 2026-05-07_canvas-sweep-full.md
+2026-05-09_task-plan.md
 2026-05-10_weekly-review.md
 2026-05-08_standup.md
 ```
@@ -57,6 +60,10 @@ Examples:
 |---|---|
 | "What do I have due on Canvas?" | Canvas Sweep |
 | "Sweep my Canvas courses" | Canvas Sweep |
+| "Add task: [description]" | Task Planner |
+| "Add tasks: [list]" | Task Planner |
+| "Sweep for tasks" / "Task sweep" | Task Planner |
+| "Plan my week" / "What do I need to do?" | Task Planner |
 | "What's my week look like / Sunday review" | Weekly Review |
 | "Help me plan this week" | Weekly Review |
 | "What do I say at standup?" | Standup Prep |
