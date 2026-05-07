@@ -55,6 +55,10 @@ Follow these steps in order for each course being swept:
 
 ### 2. For each course, check in this order:
 
+**Home** 
+- Scroll through home page, sometimes syllabus and relevant assignment information
+exists in plain text
+
 **Modules tab** (highest priority)
 - Navigate to `[course URL]/modules`
 - Read every module and every item within it
@@ -75,6 +79,8 @@ Follow these steps in order for each course being swept:
 **Announcements** (optional, surface if recent)
 - Check the most recent 3–5 announcements
 - Flag any that mention deadlines, changed dates, or new tasks
+
+
 
 ### 3. Skip
 - Syllabus (captured once in memory; re-read only if requested)

@@ -2,8 +2,7 @@
 
 **Job:** Produce a well-structured, LaTeX-formatted research paper on
 any topic Nick specifies. The paper follows standard academic conventions
-— abstract, sections, citations, bibliography — and compiles cleanly
-with `pdflatex`. Saved to `Research Team/papers/`.
+— abstract, sections, citations, bibliography. Saved to `Research Team/papers/` as a pdf. 
 
 ---
 

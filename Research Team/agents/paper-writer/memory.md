@@ -19,7 +19,7 @@
 <!-- One line per paper produced. -->
 <!-- Format: Date — Topic — Length — Files saved -->
 
-*(no entries yet)*
+2026-05-07 — How Large Language Models Work — Standard (~8pp) — Research Team/papers/2026-05-07_how-llms-work.tex
 
 ---
 
