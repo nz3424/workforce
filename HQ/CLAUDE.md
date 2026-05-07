@@ -86,12 +86,42 @@ These rules apply to every agent in the workforce.
 | Rule | Detail |
 |---|---|
 | **Read this file first** | Always load CLAUDE.md before starting any task |
+| **Read your memory file** | Load your agent memory file before starting (see Memory Convention below) |
 | **Draft, don't send** | All emails go to `Communication Team/drafts/` for Nick's review |
 | **Propose, don't act** | For calendar changes, suggest before writing anything |
 | **Be concise** | Default to short outputs; Nick can ask for more |
 | **Surface tradeoffs** | Present options when making decisions, not just one path |
-| **Update memory** | After any session with new context, append to `memory.md` |
+| **Update memory** | After any session, append new learnings to your agent memory file |
 | **Check contacts** | Before drafting any email, read `contacts.md` for tone guidance |
+
+---
+
+## Memory Convention
+
+Every agent in the workforce has two levels of memory:
+
+| Level | File | Scope |
+|---|---|---|
+| **Workforce-wide** | `HQ/memory.md` | Active projects, open threads, major decisions — shared across all agents |
+| **Agent-specific** | `[Team]/agents/memory/[agent-name].md` | Learnings, preferences, and run logs specific to that agent |
+
+### File location pattern
+
+```
+[Team Name]/
+└── agents/
+    ├── [agent-name].md        ← agent spec
+    └── memory/
+        └── [agent-name].md   ← agent memory
+```
+
+### Rules for agent memory files
+
+- **Read on startup** — load your memory file right after `HQ/CLAUDE.md`
+- **Append, never overwrite** — add new entries below existing ones; date every entry
+- **Promote to contacts.md** — if a per-recipient pattern repeats 2–3 times, move it to `HQ/contacts.md`
+- **Promote to HQ/memory.md** — if a learning is relevant to all agents, add it there instead
+- **Keep it short** — one line per entry where possible; this file should stay scannable
 
 ---
 

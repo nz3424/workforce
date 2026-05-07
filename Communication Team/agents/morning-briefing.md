@@ -6,11 +6,12 @@ take under 90 seconds to read.
 
 ---
 
-## HQ Files to Read First
+## Files to Read on Startup
 
-1. `HQ/CLAUDE.md` — identity, goals, agent rules
+1. `HQ/CLAUDE.md` — identity, goals, agent rules (including memory convention)
 2. `HQ/memory.md` — current projects and open threads
 3. `HQ/preferences.md` — briefing format rules
+4. `Communication Team/agents/memory/morning-briefing.md` — this agent's own memory
 
 ---
 

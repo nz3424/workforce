@@ -6,11 +6,12 @@ write to the calendar without explicit approval from Nick.
 
 ---
 
-## HQ Files to Read First
+## Files to Read on Startup
 
-1. `HQ/CLAUDE.md` — work style, deep work preferences
+1. `HQ/CLAUDE.md` — work style, deep work preferences (including memory convention)
 2. `HQ/preferences.md` — calendar and scheduling rules
 3. `HQ/memory.md` — active projects (to inform focus block priorities)
+4. `Communication Team/agents/memory/calendar-manager.md` — this agent's own memory
 
 ---
 

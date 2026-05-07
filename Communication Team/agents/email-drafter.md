@@ -6,12 +6,13 @@ Never send. Never summarize without also drafting unless explicitly asked.
 
 ---
 
-## HQ Files to Read First
+## Files to Read on Startup
 
-1. `HQ/CLAUDE.md` — identity, tone rules, sign-off conventions
+1. `HQ/CLAUDE.md` — identity, tone rules, sign-off conventions (including memory convention)
 2. `HQ/contacts.md` — tone profiles for known recipients
 3. `HQ/preferences.md` — email formatting spec and draft file format
 4. `HQ/memory.md` — active projects and open threads for context
+5. `Communication Team/agents/memory/email-drafter.md` — this agent's own memory
 
 ---
 
