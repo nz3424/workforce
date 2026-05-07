@@ -36,7 +36,7 @@ Requires Notion, Gmail, Google Drive, and Calendar MCP connections.
 
 ## Notion Database Schema
 
-Database name: **My Tasks**
+Database name: **Nick's Tasks Tracker**
 
 | Property | Type | Values |
 |---|---|---|
@@ -49,6 +49,7 @@ Database name: **My Tasks**
 | Notes | Rich text | Context, links, or raw extracted text |
 | Created | Created time | Auto-populated by Notion |
 | Agent Tag | Select | task-planner / canvas-sweep / weekly-review / user |
+| Assignee | Person | Nick Zhu (auto-set on every task) |
 
 Default view: Status ≠ Done, sorted Priority (High first) then Due Date asc.
 
@@ -83,8 +84,8 @@ Run this check before any mode:
 
 1. Read `Operations Team/agents/task-planner/memory.md`
 2. If `notion_database_id` is not set:
-   a. Call `notion-search` with query `"My Tasks"` to look for an
-      existing database with that name
+   a. Call `notion-search` with query `"Nick's Tasks Tracker"` to look
+      for an existing database with that name
    b. If found: store the returned database ID — append to memory.md
       under `## Notion Database`: `notion_database_id: [returned ID]`
       and `Parent page: [parent page ID]`
@@ -92,10 +93,14 @@ Run this check before any mode:
       - If no parent page is recorded in memory, ask Nick which Notion
         page the new database should live under
       - Call `notion-create-database` to create the tasks database
-        with the full schema above (name: "My Tasks")
+        with the full schema above, including the Assignee (Person)
+        property (name: "Nick's Tasks Tracker")
       - Call `notion-create-view` to create the default filtered view
         (Status ≠ Done, sorted Priority then Due Date)
       - Append to memory.md: `notion_database_id: [returned ID]`
+   d. If `notion_user_id` is not set: call `notion-get-users`, find
+      the entry matching `nicholaszhu14@gmail.com`, and append to
+      memory.md: `notion_user_id: [returned user ID]`
 3. Proceed to the requested mode
 
 ---
@@ -113,13 +118,15 @@ Run this check before any mode:
      flag it if not
    - Source: Manual
    - Agent Tag: task-planner
+   - Assignee: Nick Zhu (always — use `notion_user_id` from memory)
 2. Call `notion-search` against the database with the task name to
    check for near-duplicates (see Deduplication Rules below)
-3. If no duplicate: call `notion-create-pages` to add the task
+3. If no duplicate: call `notion-create-pages` to add the task,
+   including the Assignee property set to `notion_user_id`
 4. Output to stdout:
    ```
    Added: [Task name]
-   Priority: [priority] | Due: [date or "none"] | Project: [area or "unset"]
+   Priority: [priority] | Due: [date or "none"] | Project: [area or "unset"] | Assignee: Nick Zhu
    Notion: [page URL]
    ```
 5. If a near-duplicate exists: show both tasks and ask Nick whether
@@ -245,7 +252,8 @@ Wait for Nick's response before writing to Notion.
 
 **Step 7 — Write to Notion**
 
-1. Call `notion-create-pages` for each confirmed task
+1. Call `notion-create-pages` for each confirmed task, always
+   including the Assignee property set to `notion_user_id`
 2. Output one line per task: `Added: [Task name] — [Notion URL]`
 3. Append to memory.md:
    `[Date] — Sweep complete — N tasks added — sources: [list]`
