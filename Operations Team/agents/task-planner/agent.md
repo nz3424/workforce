@@ -36,7 +36,7 @@ Requires Notion, Gmail, Google Drive, and Calendar MCP connections.
 
 ## Notion Database Schema
 
-Database name: **Nick's Tasks**
+Database name: **My Tasks**
 
 | Property | Type | Values |
 |---|---|---|
@@ -83,14 +83,19 @@ Run this check before any mode:
 
 1. Read `Operations Team/agents/task-planner/memory.md`
 2. If `notion_database_id` is not set:
-   a. If no parent page is recorded in memory, ask Nick which Notion
-      page the database should live under
-   b. Call `notion-create-database` to create the tasks database
-      with the full schema above
-   c. Call `notion-create-view` to create the default filtered view
-      (Status ≠ Done, sorted Priority then Due Date)
-   d. Append to memory.md under `## Notion Database`:
-      `notion_database_id: [returned ID]`
+   a. Call `notion-search` with query `"My Tasks"` to look for an
+      existing database with that name
+   b. If found: store the returned database ID — append to memory.md
+      under `## Notion Database`: `notion_database_id: [returned ID]`
+      and `Parent page: [parent page ID]`
+   c. If not found:
+      - If no parent page is recorded in memory, ask Nick which Notion
+        page the new database should live under
+      - Call `notion-create-database` to create the tasks database
+        with the full schema above (name: "My Tasks")
+      - Call `notion-create-view` to create the default filtered view
+        (Status ≠ Done, sorted Priority then Due Date)
+      - Append to memory.md: `notion_database_id: [returned ID]`
 3. Proceed to the requested mode
 
 ---
@@ -143,8 +148,17 @@ to Nick. Do not write to Notion until after confirmation.
 2. For each thread returned, call `get_thread`
 3. Extract items that require Nick to act: reply, review, submit,
    schedule, follow up
-4. Record: Task name, Source = Email, Notes = sender + subject +
-   one-line summary
+4. Record each candidate with:
+   - Task name: short imperative phrase
+   - Source: Email
+   - Notes (structured):
+     ```
+     From: [sender name <email>]
+     Subject: [subject line]
+     Thread: https://mail.google.com/mail/u/0/#inbox/[threadId]
+     Action needed: [2-3 sentence summary of what needs to be done and why]
+     Key text: "[direct quote ≤ 50 words from the email that triggered this task]"
+     ```
 
 **Step 2 — Google Drive (last 48h)**
 
@@ -178,6 +192,18 @@ to Nick. Do not write to Notion until after confirmation.
    - Due Date: day before the event
    - Priority: High
    - Source: Calendar
+   - Notes (structured — extract from the event data returned by
+     `list_events`):
+     ```
+     When: [Day, Date, Time — e.g., "Tuesday, May 12 at 2:00 PM"]
+     Attendees: [name/email, name/email, ... — or "none" if not present]
+     Link: [video conference URL from conferenceData.entryPoints or
+            first Zoom/Meet/Teams URL found in description — or "none"]
+     Location: [physical location field — or "none"]
+     Description: [first 2-3 sentences of event description — or "none"]
+     ```
+   If a field is absent, write the literal string "none" for that
+   field so the Notes block is always consistent.
 
 **Step 5 — Deduplication**
 
@@ -198,6 +224,8 @@ Sources: Email (N) | Drive (N) | Canvas (N) | Calendar (N)
 
 Ready to add (N tasks):
   [Task name] — [Source] — due [date or "none"] — [Priority]
+    → [one-line context: for Calendar tasks show "with [Attendees] | [Link]";
+       for Email tasks show "From: [sender] | re: [subject] | [Thread URL]"]
   ...
 
 Skipped as duplicates (N):
