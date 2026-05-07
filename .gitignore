@@ -1,0 +1,6 @@
+# macOS
+.DS_Store
+
+# Email drafts — reviewed and sent locally, not tracked in repo
+Communication Team/drafts/*
+!Communication Team/drafts/.gitkeep
