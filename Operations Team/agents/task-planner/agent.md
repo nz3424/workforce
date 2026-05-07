@@ -46,7 +46,7 @@ Database name: **Nick's Tasks Tracker**
 | Due Date | Date | Optional |
 | Project / Area | Select | New Job / Senior Thesis / Side Projects / Life/Admin |
 | Source | Select | Manual / Email / Drive / Canvas / Calendar |
-| Notes | Rich text | Context, links, or raw extracted text |
+| Notes | Rich text | One-sentence summary of the action needed (≤ 20 words) |
 | Created | Created time | Auto-populated by Notion |
 | Agent Tag | Select | task-planner / canvas-sweep / weekly-review / user |
 | Assignee | Person | Nick Zhu (auto-set on every task) |
@@ -122,7 +122,10 @@ Run this check before any mode:
 2. Call `notion-search` against the database with the task name to
    check for near-duplicates (see Deduplication Rules below)
 3. If no duplicate: call `notion-create-pages` to add the task,
-   including the Assignee property set to `notion_user_id`
+   including the Assignee property set to `notion_user_id`. If Nick
+   provided any context beyond the task name, set Notes to a ≤ 20-word
+   summary and pass the full context as `children` paragraph blocks in
+   the page body.
 4. Output to stdout:
    ```
    Added: [Task name]
@@ -158,7 +161,9 @@ to Nick. Do not write to Notion until after confirmation.
 4. Record each candidate with:
    - Task name: short imperative phrase
    - Source: Email
-   - Notes (structured):
+   - Notes (property): one-sentence summary ≤ 20 words —
+     `"[Action verb] re: [subject] from [sender name]"`
+   - Body (children blocks — written to the page, not the property):
      ```
      From: [sender name <email>]
      Subject: [subject line]
@@ -173,7 +178,11 @@ to Nick. Do not write to Notion until after confirmation.
 2. For files that look like working docs (not auto-generated), call
    `read_file_content`
 3. Extract action items, TODOs, or flagged sections
-4. Record: Task name, Source = Drive, Notes = file name + excerpt
+4. Record each candidate with:
+   - Task name, Source = Drive
+   - Notes (property): `"Action item from [file name]"` (≤ 20 words)
+   - Body (children blocks): file name, modification date, and full
+     relevant excerpt
 
 **Step 3 — Canvas outputs (last 7d)**
 
@@ -199,7 +208,9 @@ to Nick. Do not write to Notion until after confirmation.
    - Due Date: day before the event
    - Priority: High
    - Source: Calendar
-   - Notes (structured — extract from the event data returned by
+   - Notes (property): one-sentence summary ≤ 20 words —
+     `"Prep for [event name] on [Day, Date]"`
+   - Body (children blocks — extract from the event data returned by
      `list_events`):
      ```
      When: [Day, Date, Time — e.g., "Tuesday, May 12 at 2:00 PM"]
@@ -210,7 +221,7 @@ to Nick. Do not write to Notion until after confirmation.
      Description: [first 2-3 sentences of event description — or "none"]
      ```
    If a field is absent, write the literal string "none" for that
-   field so the Notes block is always consistent.
+   field so the body block is always consistent.
 
 **Step 5 — Deduplication**
 
@@ -253,7 +264,10 @@ Wait for Nick's response before writing to Notion.
 **Step 7 — Write to Notion**
 
 1. Call `notion-create-pages` for each confirmed task, always
-   including the Assignee property set to `notion_user_id`
+   including the Assignee property set to `notion_user_id`. Pass the
+   full structured detail (Body block defined per source above) as
+   `children` paragraph blocks in the page body. The `Notes` property
+   receives only the short one-sentence summary.
 2. Output one line per task: `Added: [Task name] — [Notion URL]`
 3. Append to memory.md:
    `[Date] — Sweep complete — N tasks added — sources: [list]`
