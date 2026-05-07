@@ -12,7 +12,7 @@ Never send. Never summarize without also drafting unless explicitly asked.
 2. `HQ/contacts.md` — tone profiles for known recipients
 3. `HQ/preferences.md` — email formatting spec and draft file format
 4. `HQ/memory.md` — active projects and open threads for context
-5. `Communication Team/agents/memory/email-drafter.md` — this agent's own memory
+5. `Communication Team/agents/email-drafter/memory.md` — this agent's own memory
 
 ---
 

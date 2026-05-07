@@ -107,12 +107,15 @@ Every agent in the workforce has two levels of memory:
 
 ### File location pattern
 
+Each agent is a folder. The folder name is the agent's identifier.
+
 ```
 [Team Name]/
 └── agents/
-    ├── [agent-name].md        ← agent spec
-    └── memory/
-        └── [agent-name].md   ← agent memory
+    └── [agent-name]/
+        ├── agent.md     ← agent spec (job, startup files, tools, rules)
+        ├── memory.md    ← agent memory (append-only log)
+        └── ...          ← additional files as needed (outputs/, tools/, etc.)
 ```
 
 ### Rules for agent memory files

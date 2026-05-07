@@ -17,11 +17,11 @@ act on anything that needs a response.
 
 ## Agents
 
-| Agent | File | Primary job |
+| Agent | Folder | Primary job |
 |---|---|---|
-| Morning Briefing | `agents/morning-briefing.md` | Daily digest of calendar + unread email |
-| Email Drafter | `agents/email-drafter.md` | Reads threads, writes reply drafts |
-| Calendar Manager | `agents/calendar-manager.md` | Scheduling, focus blocks, conflict detection |
+| Morning Briefing | `agents/morning-briefing/` | Daily digest of calendar + unread email |
+| Email Drafter | `agents/email-drafter/` | Reads threads, writes reply drafts |
+| Calendar Manager | `agents/calendar-manager/` | Scheduling, focus blocks, conflict detection |
 
 ---
 
