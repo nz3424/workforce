@@ -21,6 +21,7 @@ with sources he can follow up on if he wants more depth.
 | Researcher | `agents/researcher/` | Deep-dive research reports on any topic |
 | Summarizer | `agents/summarizer/` | Condenses articles, docs, and papers into structured summaries |
 | Tech Radar | `agents/tech-radar/` | Tracks tools, libraries, and trends in Nick's areas of interest |
+| Paper Writer | `agents/paper-writer/` | Writes LaTeX research papers on any topic; outputs `.tex` + `.bib` |
 
 ---
 
@@ -39,13 +40,16 @@ with sources he can follow up on if he wants more depth.
 
 ## Output File Naming
 
-All files saved to `Research Team/outputs/` follow:
-
+Research files saved to `Research Team/outputs/`:
 ```
 YYYY-MM-DD_topic-name.md
 ```
 
-Example: `2026-05-07_react-server-components.md`
+Papers saved to `Research Team/papers/`:
+```
+YYYY-MM-DD_topic-name.tex
+YYYY-MM-DD_topic-name.bib
+```
 
 ---
 
@@ -76,6 +80,8 @@ From `HQ/preferences.md`:
 | "Give me the key points from [URL/text]" | Summarizer |
 | "What's new in [area] this week/month?" | Tech Radar |
 | "Should I look into [tool/library]?" | Tech Radar |
+| "Write a paper on [topic]" | Paper Writer |
+| "Give me a LaTeX paper on [topic]" | Paper Writer |
 
 ---
 
