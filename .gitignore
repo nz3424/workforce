@@ -1,6 +1,17 @@
 # macOS
 .DS_Store
 
+# Claude local settings — machine-specific, not shared
+.claude/
+
 # Email drafts — reviewed and sent locally, not tracked in repo
 Communication Team/drafts/*
 !Communication Team/drafts/.gitkeep
+
+# Agent outputs — ephemeral, regenerated each run
+Operations Team/outputs/*
+!Operations Team/outputs/.gitkeep
+Research Team/outputs/*
+!Research Team/outputs/.gitkeep
+Research Team/papers/*
+!Research Team/papers/.gitkeep

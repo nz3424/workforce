@@ -112,6 +112,19 @@ where the date is the Sunday the review is run. Also output to stdout.
   `[Date] — Weekly review complete. Priorities: [1], [2], [3]`
 - Update this agent's `memory.md` with the week's key themes
 
+## Git Hygiene (end of every session)
+
+After all output and memory updates are complete, run `git status` and
+report the result as a brief addendum at the bottom of the review:
+
+```
+## Repo Status
+[Modified files listed here]
+Suggestion: run /sync to commit and push, or handle manually.
+```
+
+If there are no changes, omit this section entirely.
+
 ---
 
 See `Operations Team/TEAM.md` for routing context.

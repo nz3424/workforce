@@ -39,7 +39,7 @@
 <!-- One line per sweep run. -->
 <!-- Format: Date — N tasks added — sources used — file saved (if any) -->
 
-*(no entries yet)*
+- 2026-05-07 — Sweep complete — 3 tasks added — sources: Canvas (2), Drive (1) — 5 items skipped by user (1, 2, 6, 7, 8) — 3 duplicates skipped automatically
 
 ---
 

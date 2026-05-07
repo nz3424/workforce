@@ -128,6 +128,23 @@ Each agent is a folder. The folder name is the agent's identifier.
 
 ---
 
+## Natural Language Shortcuts
+
+These phrases automatically trigger multi-agent pipelines — no slash
+command needed. Match on intent, not exact wording.
+
+| If Nick says... | Run this pipeline |
+|---|---|
+| "Write me a paper on [X]" | `/research-paper` — research then write, no intermediate file |
+| "Write me a summary paper on [X]" | `/research-paper` — same pipeline, default to Short length |
+| "Research and write a paper on [X]" | `/research-paper` |
+| "Run /sync" or "sync the repo" | `/sync` — commit and push all pending changes |
+
+When one of these patterns is detected, run the corresponding pipeline
+immediately without asking for confirmation first.
+
+---
+
 ## Key HQ Files
 
 | File | Purpose |
