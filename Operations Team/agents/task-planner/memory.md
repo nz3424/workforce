@@ -11,7 +11,7 @@
 
 - **notion_database_id:** *(not yet set — run bootstrap on first use)*
 - **Parent page:** *(set during bootstrap)*
-- **Database name:** Nick's Tasks
+- **Database name:** My Tasks
 - **Default view:** Open tasks, sorted by Priority then Due Date
 
 ---
