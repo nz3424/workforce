@@ -29,7 +29,13 @@
 - **Goal:** Build a personal AI agent workforce for coding, research,
   communication, and daily ops
 - **Last worked on:** May 2026
-- **Next step:** Set up Communication Team — Morning Briefing agent first
+- **Next step:** Coding Team is live — three agents: Code Writer, Code Reviewer, Debugger
+
+### Coding Team
+- **Status:** In progress
+- **Goal:** Force multiplier for the code lifecycle: write, review, debug
+- **Last worked on:** May 2026
+- **Next step:** Use the agents on real tasks; refine based on what works
 
 ---
 
