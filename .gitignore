@@ -2,7 +2,9 @@
 .DS_Store
 
 # Claude local settings — machine-specific, not shared
-.claude/
+.claude/settings.local.json
+# Commands and skills are tracked (they're part of the workforce spec)
+# Only the local settings file is excluded
 
 # Email drafts — reviewed and sent locally, not tracked in repo
 Communication Team/drafts/*
@@ -15,3 +17,4 @@ Research Team/outputs/*
 !Research Team/outputs/.gitkeep
 Research Team/papers/*
 !Research Team/papers/.gitkeep
+.claude/worktrees/

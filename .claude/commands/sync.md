@@ -2,93 +2,121 @@
 
 Sync the Workforce repo to GitHub. Follow these steps exactly:
 
+## Step 0 — Pin to repo root
+Before running any git command, resolve the actual repo root:
+```
+REPO=$(git -C /Users/nzhu/Documents/Claude/Projects/Workforce rev-parse --show-toplevel)
+```
+Run ALL subsequent git commands as `git -C "$REPO" <command>` to ensure
+you're always operating on the real working directory, not a worktree
+or sandbox default.
+
 ## Step 1 — Fetch remote
-Run `git fetch origin` to pull down the latest remote state without
-merging. This makes the comparison accurate.
-
-## Step 2 — Compare local vs. remote
-Run the following and report results before doing anything else:
-
 ```
-git status                        # local uncommitted changes
-git diff --stat HEAD origin/main  # commits ahead/behind remote
-git log origin/main..HEAD --oneline  # local commits not yet on GitHub
-git log HEAD..origin/main --oneline  # remote commits not yet local
+git -C "$REPO" fetch origin
 ```
 
-Report a clear summary in this format:
+## Step 2 — Compare working directory vs. GitHub
 ```
-Repo Comparison — local vs. origin/main
-  Local uncommitted changes: <N files, or "none">
-  Commits ahead of GitHub:   <N, or "none">
-  Commits behind GitHub:     <N, or "none">
-
-  Unpushed commits:
-    <hash> <message>   ← only if ahead
-    ...
-
-  Remote-only commits:
-    <hash> <message>   ← only if behind
-    ...
+git -C "$REPO" diff origin/main --stat
+git -C "$REPO" diff origin/main --name-status
+git -C "$REPO" log HEAD..origin/main --oneline
 ```
 
-## Step 3 — Handle divergence
-Before staging anything, check for conflicts:
+Report in this format:
+```
+Local vs. GitHub (origin/main)
+  Files changed: <N, or "none — working directory matches GitHub">
 
-- **Behind only (no local changes, no unpushed commits):** Run
-  `git pull origin main` and report "Pulled N commits from GitHub. Up to date."
-  Then stop — nothing to push.
+  Modified:        <file>  ...
+  Added locally:   <file>  ...
+  Deleted locally: <file>  ...
+  Remote-only commits: <hash message> ...  (or "none")
+```
 
-- **Behind AND have local changes or unpushed commits:** Stop and warn:
-  "Local and remote have diverged. Pull first or resolve manually before
-  syncing." Do not commit or push. Describe exactly what would conflict.
+If working directory matches GitHub exactly: report "Already in sync." and stop.
 
-- **Ahead only or clean divergence (no conflicts):** Continue to Step 4.
+## Step 3 — Handle remote-only changes
+Check `git -C "$REPO" log HEAD..origin/main --oneline`:
 
-- **Clean (nothing to commit, nothing to push):** Report
-  "Repo is clean — already in sync with GitHub." and stop.
+- **Remote has commits, no local changes:** Run `git -C "$REPO" pull origin main`.
+  Report "Pulled N commits. Up to date." and stop.
+- **Remote has commits AND local changes exist:** Stop and warn:
+  "GitHub has commits your local directory doesn't. Pull and merge before syncing."
+  List the remote commits. Do not commit or push.
+- **Local is ahead or even:** Continue to Step 4.
 
-## Step 4 — Stage changes
-Run `git add -A` to stage all local changes.
+## Step 4 — Stage changes and generate commit message
+```
+git -C "$REPO" add -A
+```
 
-## Step 5 — Generate commit message
 Categorize staged changes into:
-- **Structural** — agent specs, TEAM.md, CLAUDE.md, HQ files, .gitignore, new agents
+- **Structural** — agent specs, TEAM.md, CLAUDE.md, HQ files, .gitignore,
+  .claude/commands/, new agents
 - **Memory** — any file named `memory.md` or in `outputs/` or `drafts/`
 
 Build the commit message:
 - **Only memory files:** `Update agent memory — [YYYY-MM-DD]`
-- **Only structural:** Describe what changed, e.g. `Add /sync comparison step`
-- **Mixed:** 
+- **Only structural:** Describe what changed specifically
+- **Mixed:**
   ```
   <Short description of structural change>
-  
+
   Also update agent memory files
   ```
 - **Multiple structural changes:**
   ```
   Update [summary]
-  
+
   - Change one
   - Change two
   ```
 
 Subject line: under 60 characters, imperative mood ("Add", "Update", "Fix").
 
-If there are only unpushed commits and no new local changes, skip
-Steps 4–5 and go straight to Step 6.
+## Step 5 — Confirmation gate
 
-## Step 6 — Commit (if there are staged changes)
-Run `git commit -m "<generated message>"`.
-Skip this step if there were no local uncommitted changes to stage.
+**If changes are structural (or mixed):**
+Stop and show a confirmation prompt before doing anything irreversible:
+
+```
+Ready to commit and push:
+
+  Commit message: "<generated message>"
+  Files:
+    <list of staged files>
+  Destination: origin/main
+
+Proceed? (yes / edit / cancel)
+```
+
+Wait for Nick's response:
+- **"yes"** — continue to Step 6
+- **"edit"** — ask what to change (message, files to exclude, etc.),
+  update accordingly, re-show the prompt, wait again
+- **"cancel"** — run `git -C "$REPO" reset HEAD` to unstage everything
+  and report "Cancelled — no changes pushed."
+
+**If changes are memory-only:**
+Skip the confirmation prompt and proceed directly to Step 6.
+(Memory commits are low-stakes and frequent — no need to interrupt.)
+
+## Step 6 — Commit
+```
+git -C "$REPO" commit -m "<generated message>"
+```
+Skip if no new local changes were staged (only unpushed commits existed).
 
 ## Step 7 — Push
-Run `git push origin main`.
+```
+git -C "$REPO" push origin main
+```
 
 ## Step 8 — Report
 ```
 Synced to GitHub.
 Committed: <commit subject, or "no new commit — pushed existing">
 Branch: main → origin/main
-Files changed: <count, or "—">
+Files changed: <count>
 ```
