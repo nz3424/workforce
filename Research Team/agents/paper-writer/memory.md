@@ -10,7 +10,7 @@
 <!-- Style, length, or formatting corrections Nick has made. -->
 <!-- Format: Date — Observation -->
 
-*(no entries yet)*
+2026-05-08 — PDF is the primary deliverable. Always compile .tex → .pdf via pdflatex (two bibtex + two pdflatex passes). Clean up aux files after successful compile. Nick does not want to compile manually.
 
 ---
 
@@ -20,6 +20,7 @@
 <!-- Format: Date — Topic — Length — Files saved -->
 
 2026-05-07 — How Large Language Models Work — Standard (~8pp) — Research Team/papers/2026-05-07_how-llms-work.tex
+- 2026-05-08: Wrote paper "Productive Agent Systems" covering automated usage, memory best practices, and skill-driven productivity.
 
 ---
 

@@ -33,15 +33,31 @@ any topic Nick specifies. The paper follows standard academic conventions
 - A topic + length: "Write a short paper (~4 pages) on React Server Components"
 - A topic + existing research: "Use my research file outputs/2026-05-07_rsc.md to write a paper"
 
-**Output:** Two files saved to `Research Team/papers/`:
+**Output:** Three files saved to `Research Team/papers/`:
 ```
 YYYY-MM-DD_topic-name.tex   ← LaTeX source
 YYYY-MM-DD_topic-name.bib   ← BibTeX bibliography (if references exist)
+YYYY-MM-DD_topic-name.pdf   ← Compiled PDF (primary deliverable)
 ```
 
+### Compilation step (required)
+After writing the `.tex` and `.bib` files, compile to PDF using the shell.
+Run from the `Research Team/papers/` directory:
+```bash
+cd "/Users/nzhu/Documents/Claude/Projects/Workforce/Research Team/papers" && \
+pdflatex -interaction=nonstopmode YYYY-MM-DD_topic-name.tex && \
+bibtex YYYY-MM-DD_topic-name && \
+pdflatex -interaction=nonstopmode YYYY-MM-DD_topic-name.tex && \
+pdflatex -interaction=nonstopmode YYYY-MM-DD_topic-name.tex
+```
+(Two extra pdflatex passes resolve cross-references and citations.)
+
+If `pdflatex` is unavailable, try `latexmk -pdf YYYY-MM-DD_topic-name.tex`.
+
+If compilation fails, fix the LaTeX errors and retry before reporting back.
+
 After saving, output the file paths and a one-paragraph plain-English
-summary of the paper's argument so Nick can sanity-check the direction
-before compiling.
+summary of the paper's argument so Nick can sanity-check the direction.
 
 ---
 
@@ -162,8 +178,11 @@ Default to **Standard** unless the request signals otherwise.
 - Always check `Research Team/outputs/` for prior research on the topic
   before doing fresh web searches — reuse existing work where possible.
 - Save both `.tex` and `.bib` files even if the bibliography is short.
-- After saving, print the file paths and a plain-English summary of
-  the paper's argument.
+- Always compile to PDF after saving — the PDF is the primary deliverable.
+  Clean up auxiliary files (`.aux`, `.log`, `.blg`, `.bbl`, `.out`) after
+  a successful compile to keep the papers folder tidy.
+- After saving and compiling, print all file paths (including PDF) and a
+  plain-English summary of the paper's argument.
 - Update `memory.md` with a one-line log entry after each paper produced.
 
 ---

@@ -29,9 +29,12 @@ take under 90 seconds to read.
 **Input:** No explicit input required. Triggered on a schedule (each
 weekday morning) or on demand ("give me my morning briefing").
 
-**Output:** A single markdown briefing written to stdout (or to a file
-at `Communication Team/drafts/YYYY-MM-DD_morning-briefing.md` if saving
-for reference). Never sent anywhere automatically.
+**Output:** Send an email to nicholaszhu14@gmail.com with the briefing as
+the email body. Subject line: `Morning Briefing — [Day], [Date]`. Use
+the Gmail `create_draft` tool (the MCP does not support direct send —
+the draft will appear in Drafts and can be auto-sent via another mechanism).
+Optionally also save to `Communication Team/drafts/YYYY-MM-DD_morning-briefing.md`
+for archival.
 
 ---
 
@@ -85,7 +88,7 @@ conflict detected, follow-up overdue, etc.]
 
 ## Agent Rules
 
-- Never send email or modify calendar — output only
+- Send briefing as an email draft to nicholaszhu14@gmail.com — never modify calendar
 - If Gmail or Calendar is unavailable, note it and skip that section
 - Default to showing no more than 5 email threads; summarize the rest
   as "X more threads — none appear urgent"
