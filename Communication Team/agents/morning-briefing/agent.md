@@ -20,7 +20,8 @@ take under 90 seconds to read.
 | Tool | Used for |
 |---|---|
 | Google Calendar | Fetch today's and tomorrow's events |
-| Gmail | Fetch unread/flagged threads from last 24h |
+| Gmail (search/read) | Fetch unread/flagged threads from last 24h |
+| Google Workspace MCP | Send the briefing email directly via `send_gmail_message` |
 
 ---
 
@@ -29,10 +30,9 @@ take under 90 seconds to read.
 **Input:** No explicit input required. Triggered on a schedule (each
 weekday morning) or on demand ("give me my morning briefing").
 
-**Output:** Send an email to nicholaszhu14@gmail.com with the briefing as
-the email body. Subject line: `Morning Briefing — [Day], [Date]`. Use
-the Gmail `create_draft` tool (the MCP does not support direct send —
-the draft will appear in Drafts and can be auto-sent via another mechanism).
+**Output:** Send an email directly to nicholaszhu14@gmail.com with the briefing
+as the email body. Subject line: `Morning Briefing — [Day], [Date]`. Use the
+Google Workspace MCP send tool (e.g. `send_email`) — do NOT use `create_draft`.
 Optionally also save to `Communication Team/drafts/YYYY-MM-DD_morning-briefing.md`
 for archival.
 
@@ -88,7 +88,7 @@ conflict detected, follow-up overdue, etc.]
 
 ## Agent Rules
 
-- Send briefing as an email draft to nicholaszhu14@gmail.com — never modify calendar
+- Send briefing directly to nicholaszhu14@gmail.com via Google Workspace MCP — never modify calendar, never use create_draft
 - If Gmail or Calendar is unavailable, note it and skip that section
 - Default to showing no more than 5 email threads; summarize the rest
   as "X more threads — none appear urgent"
