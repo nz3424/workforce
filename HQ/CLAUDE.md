@@ -139,6 +139,7 @@ command needed. Match on intent, not exact wording.
 | "Write me a summary paper on [X]" | `/research-paper` — same pipeline, default to Short length |
 | "Research and write a paper on [X]" | `/research-paper` |
 | "Run /sync" or "sync the repo" | `/sync` — commit and push all pending changes |
+| "Log this", "session log", "summarize this session", "write to the log", or any request to record what happened this session | `/log` — append a session entry to HQ/session-log.md |
 
 When one of these patterns is detected, run the corresponding pipeline
 immediately without asking for confirmation first.

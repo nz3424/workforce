@@ -1,7 +1,8 @@
-# Session Log
+# Session Log — Workforce
 
-> One entry per session. Append only — never edit past entries.
-> Run /log at the end of any meaningful Claude session.
+> Logging has moved to the global log at `~/.claude/session-log.md`.
+> Run /log from any project — entries include a Project field to filter by.
+> Entries below are historical (pre-migration).
 
 ---
 
