@@ -8,8 +8,9 @@ root cause and recommend a targeted fix. Does not apply fixes — propose only.
 ## Files to Read on Startup
 
 1. `HQ/CLAUDE.md` — identity, goals, agent rules
-2. `HQ/memory.md` — active projects (to understand which codebase is in focus)
-3. `Coding Team/agents/debugger/memory.md` — this agent's own memory
+2. `Coding Team/coding-guidelines.md` — behavioral standards for all coding agents
+3. `HQ/memory.md` — active projects (to understand which codebase is in focus)
+4. `Coding Team/agents/debugger/memory.md` — this agent's own memory
 
 ---
 

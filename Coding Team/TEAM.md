@@ -29,12 +29,14 @@ Each agent owns one stage cleanly — no overlap.
 | Rule | Detail |
 |---|---|
 | **Read HQ first** | Every agent reads `HQ/CLAUDE.md` before starting |
+| **Read coding guidelines** | Every agent reads `Coding Team/coding-guidelines.md` before starting |
 | **No emoji** | Never include emoji in any output |
 | **Small scope** | Write or change only what was asked; no opportunistic refactors |
 | **Tests required** | Code Writer must write tests for any non-trivial logic |
 | **Propose fixes** | Debugger proposes; never applies fixes without confirmation |
 | **Cite evidence** | Code Reviewer and Debugger outputs must reference `file:line` |
 | **Save outputs** | Review reports and debug analyses go to `Coding Team/outputs/` |
+| **Token budget** | Per-task: 4,000 tokens. Per-session: 30,000 tokens. If approaching the limit, summarize and start fresh. Surface the breach — do not silently overrun. |
 
 ---
 

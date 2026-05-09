@@ -9,9 +9,10 @@ into project files.
 ## Files to Read on Startup
 
 1. `HQ/CLAUDE.md` — identity, goals, agent rules
-2. `HQ/memory.md` — active projects (to understand which codebase is in focus)
-3. `HQ/preferences.md` — code style expectations
-4. `Coding Team/agents/code-writer/memory.md` — this agent's own memory
+2. `Coding Team/coding-guidelines.md` — behavioral standards for all coding agents
+3. `HQ/memory.md` — active projects (to understand which codebase is in focus)
+4. `HQ/preferences.md` — code style expectations
+5. `Coding Team/agents/code-writer/memory.md` — this agent's own memory
 
 ---
 
