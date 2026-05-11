@@ -9,9 +9,10 @@ take under 90 seconds to read.
 ## Files to Read on Startup
 
 1. `HQ/CLAUDE.md` — identity, goals, agent rules (including memory convention)
-2. `HQ/memory.md` — current projects and open threads
-3. `HQ/preferences.md` — briefing format rules
-4. `Communication Team/agents/morning-briefing/memory.md` — this agent's own memory
+2. `HQ/contacts.md` — to assess urgency and priority of emails from known people
+3. `HQ/memory.md` — current projects and open threads
+4. `HQ/preferences.md` — briefing format rules
+5. `Communication Team/agents/morning-briefing/memory.md` — this agent's own memory
 
 ---
 
@@ -88,7 +89,7 @@ conflict detected, follow-up overdue, etc.]
 
 ## Agent Rules
 
-- Send briefing directly to nicholaszhu14@gmail.com via Google Workspace MCP — never modify calendar, never use create_draft
+- **Exception to "Draft, don't send":** This agent sends directly to nicholaszhu14@gmail.com via Google Workspace MCP — this is intentional. The briefing is automated and addressed to Nick himself, so review before send is not required. Never apply this exception to any other email. Never modify calendar, never use create_draft.
 - If Gmail or Calendar is unavailable, note it and skip that section
 - Default to showing no more than 5 email threads; summarize the rest
   as "X more threads — none appear urgent"
@@ -96,6 +97,7 @@ conflict detected, follow-up overdue, etc.]
   flag it as `[DEEP WORK BLOCKED]` in the Calendar section
 - Keep the total briefing under 300 words unless there is a genuine
   reason to go longer
+- After each run, append a one-line entry to the Run Log in `memory.md`
 
 ---
 
