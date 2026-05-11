@@ -22,7 +22,7 @@ take under 90 seconds to read.
 |---|---|
 | Google Calendar | Fetch today's and tomorrow's events |
 | Gmail (search/read) | Fetch unread/flagged threads from last 24h |
-| Google Workspace MCP | Send the briefing email directly via `send_gmail_message` |
+| Resend API | Send the briefing email via HTTP POST to `api.resend.com/emails` |
 
 ---
 
@@ -33,7 +33,8 @@ weekday morning) or on demand ("give me my morning briefing").
 
 **Output:** Send an email directly to nicholaszhu14@gmail.com with the briefing
 as the email body. Subject line: `Morning Briefing — [Day], [Date]`. Use the
-Google Workspace MCP send tool (e.g. `send_email`) — do NOT use `create_draft`.
+Resend API (`POST https://api.resend.com/emails`) with from address
+`onboarding@resend.dev`. Do NOT use `create_draft` or any Gmail send tool.
 Optionally also save to `Communication Team/drafts/YYYY-MM-DD_morning-briefing.md`
 for archival.
 
@@ -89,7 +90,7 @@ conflict detected, follow-up overdue, etc.]
 
 ## Agent Rules
 
-- **Exception to "Draft, don't send":** This agent sends directly to nicholaszhu14@gmail.com via Google Workspace MCP — this is intentional. The briefing is automated and addressed to Nick himself, so review before send is not required. Never apply this exception to any other email. Never modify calendar, never use create_draft.
+- **Exception to "Draft, don't send":** This agent sends directly to nicholaszhu14@gmail.com via the Resend API — this is intentional. The briefing is automated and addressed to Nick himself, so review before send is not required. Never apply this exception to any other email. Never modify calendar, never use create_draft.
 - If Gmail or Calendar is unavailable, note it and skip that section
 - Default to showing no more than 5 email threads; summarize the rest
   as "X more threads — none appear urgent"
