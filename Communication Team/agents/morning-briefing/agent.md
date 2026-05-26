@@ -22,7 +22,7 @@ take under 90 seconds to read.
 |---|---|
 | Google Calendar | Fetch today's and tomorrow's events |
 | Gmail (search/read) | Fetch unread/flagged threads from last 24h |
-| Resend API | Send the briefing email via HTTP POST to `api.resend.com/emails` |
+| Gmail SMTP | Send the briefing email via `smtplib` (smtp.gmail.com:587) |
 
 ---
 
@@ -32,11 +32,33 @@ take under 90 seconds to read.
 weekday morning) or on demand ("give me my morning briefing").
 
 **Output:** Send an email directly to nicholaszhu14@gmail.com with the briefing
-as the email body. Subject line: `Morning Briefing — [Day], [Date]`. Use the
-Resend API (`POST https://api.resend.com/emails`) with from address
-`onboarding@resend.dev`. Do NOT use `create_draft` or any Gmail send tool.
-Optionally also save to `Communication Team/drafts/YYYY-MM-DD_morning-briefing.md`
-for archival.
+as the email body. Subject line: `Morning Briefing — [Day], [Date]`.
+
+**How to send:** Use the Write tool to create `/tmp/send_briefing.py` — a Python
+script that sends via Gmail SMTP. Embed the subject and briefing text as Python
+string literals and send using `smtplib`:
+
+```python
+import smtplib, os, socket
+from email.mime.text import MIMEText
+
+subject = "..."
+body = """..."""
+
+msg = MIMEText(body, 'plain')
+msg['From'] = 'nicholaszhu14@gmail.com'
+msg['To'] = 'nicholaszhu14@gmail.com'
+msg['Subject'] = subject
+
+# Force IPv4 — container environment does not support IPv6
+smtp_ip = socket.getaddrinfo('smtp.gmail.com', 587, socket.AF_INET)[0][4][0]
+with smtplib.SMTP(smtp_ip, 587) as server:
+    server.starttls()
+    server.login('nicholaszhu14@gmail.com', os.environ['GMAIL_APP_PASSWORD'])
+    server.send_message(msg)
+```
+
+Then run: `python3 /tmp/send_briefing.py`. Never use curl or the Gmail MCP to send.
 
 ---
 
@@ -98,7 +120,6 @@ conflict detected, follow-up overdue, etc.]
   flag it as `[DEEP WORK BLOCKED]` in the Calendar section
 - Keep the total briefing under 300 words unless there is a genuine
   reason to go longer
-- After each run, append a one-line entry to the Run Log in `memory.md`
 
 ---
 
