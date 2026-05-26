@@ -1,7 +1,8 @@
 # morning-briefing — Agent Memory
 
 > This file is the persistent memory for the Morning Briefing agent.
-> Read it on startup (after HQ/CLAUDE.md). Never overwrite existing entries — only add.
+> Read it on startup (after HQ/CLAUDE.md).
+> **Do NOT write to this file during or after a run.** There is no run log. Do not create one.
 
 ---
 
@@ -20,7 +21,6 @@
 ## Recurring Context
 
 <!-- Standing facts that affect how the briefing should be produced. -->
-<!-- e.g. "Nick's Monday standup is always at 9am — never flag as [PREP NEEDED]" -->
 
 - **Deep work window:** 10:00 AM–12:00 PM is protected for focus work. Flag any meetings scheduled in this window as [DEEP WORK IMPACT].
 - **Weekly review:** Every Sunday — don't flag Sunday as unusual if calendar is light.
@@ -30,27 +30,9 @@
 
 ---
 
-## Run Log
-
-<!-- One line per run. Helps detect patterns over time. -->
-<!-- Format: Date — What was notable (or "routine run, nothing flagged") -->
-
-- 2026-05-26 — Commencement day; calendar full 9 AM–2 PM; one overdue Notion task (GER 223 Final Paper, due 2026-05-09); no actionable email; Resend API blocked by environment network policy — briefing saved to drafts/, not sent.
-- 2026-05-26 (run 2) — Same calendar; two overdue Notion tasks surfaced (GER 223 Final Paper due 2026-05-09, ECO100 Final Exam due 2026-05-10, both still "In progress"); no actionable email; Resend API blocked by network policy — briefing saved to drafts/, not sent.
-- 2026-05-26 (run 3) — Commencement day; calendar full 9 AM–2 PM [DEEP WORK BLOCKED]; same two overdue Notion tasks still "In progress"; Colonial listserv 5-day pay deadline surfaced; Handshake/Mutual of Omaha recruiter bump noted [FYI]; Resend API blocked by environment network policy — briefing saved to drafts/, not sent.
-- 2026-05-26 (run 4) — Commencement day; same calendar (9 AM–2 PM [DEEP WORK BLOCKED]); two overdue Notion tasks still "In progress" (GER 223 due 05-09, ECO100 due 05-10); Colonial 5-day pay deadline and Mutual of Omaha recruiter bump surfaced; SMTP ports 587 and 465 both blocked by environment network policy — briefing saved to Communication Team/drafts/2026-05-26_morning-briefing.md, not sent.
-- 2026-05-26 (run 5) — Same calendar (9 AM–2 PM [DEEP WORK BLOCKED]); same two overdue Notion tasks (GER 223 due 05-09, ECO100 due 05-10); Colonial pay deadline (May 31) and Mutual of Omaha recruiter bump surfaced; GMAIL_CLIENT_SECRET not in environment so OAuth send failed; Resend API blocked (403/Cloudflare); briefing created as Gmail draft (ID: r1920768778058179841) and saved to Communication Team/drafts/. Note: GMAIL_CLIENT_ID and GMAIL_REFRESH_TOKEN are present but GMAIL_CLIENT_SECRET is missing — needs to be added to environment for OAuth send to work.
-- 2026-05-26 (run 6) — Commencement day; same calendar (9 AM–2 PM [DEEP WORK BLOCKED]); same two overdue Notion tasks still "In progress" (GER 223 due 05-09, ECO100 due 05-10); Colonial pay deadline May 31 and Mutual of Omaha recruiter bump surfaced; OAuth send succeeded (GMAIL_CLIENT_SECRET now present in env); message ID 19e6643d0a3a1d5f sent to nicholaszhu14@gmail.com.
-
----
-
 ## Open Items
 
 <!-- Things from a previous briefing that still need follow-up, -->
 <!-- if not yet captured in HQ/memory.md. -->
 
 *(no entries yet)*
-
----
-
-*Date every entry.*

@@ -22,7 +22,7 @@ take under 90 seconds to read.
 |---|---|
 | Google Calendar | Fetch today's and tomorrow's events |
 | Gmail (search/read) | Fetch unread/flagged threads from last 24h |
-| Gmail SMTP | Send the briefing email via `smtplib` (smtp.gmail.com:587) |
+| Gmail API | Send the briefing email via HTTPS to `gmail.googleapis.com` |
 
 ---
 
@@ -35,30 +35,44 @@ weekday morning) or on demand ("give me my morning briefing").
 as the email body. Subject line: `Morning Briefing — [Day], [Date]`.
 
 **How to send:** Use the Write tool to create `/tmp/send_briefing.py` — a Python
-script that sends via Gmail SMTP. Embed the subject and briefing text as Python
-string literals and send using `smtplib`:
+script that sends via the Gmail API over HTTPS. Embed the subject and briefing
+text as Python string literals:
 
 ```python
-import smtplib, os, socket
+import urllib.request, urllib.parse, json, base64, os
 from email.mime.text import MIMEText
 
 subject = "..."
 body = """..."""
 
 msg = MIMEText(body, 'plain')
-msg['From'] = 'nicholaszhu14@gmail.com'
 msg['To'] = 'nicholaszhu14@gmail.com'
+msg['From'] = 'nicholaszhu14@gmail.com'
 msg['Subject'] = subject
+raw = base64.urlsafe_b64encode(msg.as_bytes()).decode()
 
-# Force IPv4 — container environment does not support IPv6
-smtp_ip = socket.getaddrinfo('smtp.gmail.com', 587, socket.AF_INET)[0][4][0]
-with smtplib.SMTP(smtp_ip, 587) as server:
-    server.starttls()
-    server.login('nicholaszhu14@gmail.com', os.environ['GMAIL_APP_PASSWORD'])
-    server.send_message(msg)
+# Exchange refresh token for access token
+token_req = urllib.request.Request(
+    'https://oauth2.googleapis.com/token',
+    data=urllib.parse.urlencode({
+        'client_id': os.environ['GMAIL_CLIENT_ID'],
+        'client_secret': os.environ['GMAIL_CLIENT_SECRET'],
+        'refresh_token': os.environ['GMAIL_REFRESH_TOKEN'],
+        'grant_type': 'refresh_token'
+    }).encode()
+)
+access_token = json.loads(urllib.request.urlopen(token_req).read())['access_token']
+
+# Send via Gmail API
+send_req = urllib.request.Request(
+    'https://gmail.googleapis.com/gmail/v1/users/me/messages/send',
+    data=json.dumps({'raw': raw}).encode(),
+    headers={'Authorization': f'Bearer {access_token}', 'Content-Type': 'application/json'}
+)
+urllib.request.urlopen(send_req)
 ```
 
-Then run: `python3 /tmp/send_briefing.py`. Never use curl or the Gmail MCP to send.
+Then run: `python3 /tmp/send_briefing.py`. Never use curl, smtplib, or the Gmail MCP to send.
 
 ---
 
@@ -112,7 +126,8 @@ conflict detected, follow-up overdue, etc.]
 
 ## Agent Rules
 
-- **Exception to "Draft, don't send":** This agent sends directly to nicholaszhu14@gmail.com via the Resend API — this is intentional. The briefing is automated and addressed to Nick himself, so review before send is not required. Never apply this exception to any other email. Never modify calendar, never use create_draft.
+- **Exception to "Draft, don't send":** This agent sends directly to nicholaszhu14@gmail.com via the Gmail API — this is intentional. The briefing is automated and addressed to Nick himself, so review before send is not required. Never apply this exception to any other email. Never modify calendar, never use create_draft.
+- **Do not write to memory.md.** This agent is read-only with respect to all files in the repo. Do not append run logs, observations, or any other content to `Communication Team/agents/morning-briefing/memory.md` or any other file. Do not commit or push anything.
 - If Gmail or Calendar is unavailable, note it and skip that section
 - Default to showing no more than 5 email threads; summarize the rest
   as "X more threads — none appear urgent"
