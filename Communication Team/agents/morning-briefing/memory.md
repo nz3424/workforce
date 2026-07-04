@@ -27,6 +27,15 @@
 - **Life stage:** Nick just graduated and is starting a new SWE job (May 2026). Anything job-related (onboarding, manager comms, colleague threads) is high-priority for the first 90 days.
 - **Standing blocks:** None defined yet — update this section once Nick's recurring meetings are established at his new job.
 - **Contacts file:** Check `HQ/contacts.md` before flagging emails that need replies — use tone profiles there to assess urgency and context.
+- **Gmail send auth:** Automated sending uses a **production Desktop** OAuth client ("Morning Briefing Desktop", project *Google Workspace MCP*) via `GMAIL_CLIENT_ID` / `GMAIL_CLIENT_SECRET` / `GMAIL_REFRESH_TOKEN` env vars in the Morning Briefing cloud environment. Because the app is in production, the refresh token is long-lived — it only dies on a Google password change or manual revoke, never on a schedule.
+
+---
+
+## Ops History
+
+<!-- Human-added maintenance notes. The agent's "read-only during runs" rule still applies. -->
+
+- **2026-07-03** — Automated send broke (`invalid_grant` on `GMAIL_REFRESH_TOKEN`; briefing fell back to a Gmail draft). **Root cause:** a Google account password change revoked the old Gmail-scope refresh token — a one-time event, *not* the 7-day "Testing" expiry (the OAuth app is in production). **Fix:** created a new **production Desktop** OAuth client "Morning Briefing Desktop" (project *Google Workspace MCP*), re-minted the refresh token, and updated all three `GMAIL_*` env vars in the Morning Briefing cloud environment. Verified by a real briefing delivered to the inbox. **If `invalid_grant` recurs:** check for a recent password change or revoked access first, then re-mint the refresh token under the Desktop client (Desktop type avoids the `redirect_uri_mismatch` that a Web-application client hits in a local loopback OAuth flow).
 
 ---
 
