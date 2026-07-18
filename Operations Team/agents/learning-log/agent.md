@@ -23,6 +23,9 @@ works too.
    memory (format corrections, recurring topics)
 4. `~/.claude/session-log.md` — only when running the end-of-day recap
    pass (see below); source of candidate entries, not read otherwise
+5. Output of `Operations Team/agents/learning-log/extract_transcripts.py`
+   — only during the end-of-day recap pass; today's raw Claude Code
+   session transcripts across every project, not just Workforce
 
 ---
 
@@ -50,18 +53,30 @@ yet). Confirm with a one-line acknowledgment — no other output.
 
 **Behavior:**
 - Check `~/.claude/session-log.md` for any entries dated today.
-- If entries exist, turn each into a candidate one-line "learned"
-  bullet (translate session-speak into a learning, not a task list —
-  e.g. "Built and debugged X" → "Learned Y about X" only if a real
-  learning is evident; skip entries that are pure task-completion with
-  no new understanding).
+- Run `python3 "Operations Team/agents/learning-log/extract_transcripts.py"`
+  (no argument = today, local time) to pull today's raw Claude Code
+  session transcripts across **every** project — not just Workforce.
+  It strips tool_use/tool_result/thinking noise down to just the
+  user/assistant text exchanges, grouped by project and session.
+- From both sources, draft candidate one-line "learned" bullets —
+  translate session-speak into a real learning, not a task list (e.g.
+  "Built and debugged X" → "Learned Y about X" only if a genuine
+  learning is evident; skip entries that are pure task-completion or
+  small talk with no new understanding). Tag each candidate with its
+  source project when it isn't Workforce, e.g. `[llm-training] ...`.
+- If the same learning shows up in both session-log.md and a
+  transcript, propose it once.
 - Present candidates to Nick for accept / edit / skip. Don't write
   anything until he responds.
 - Merge his manual entries from earlier today (if any) with the
   accepted candidates under the same `## YYYY-MM-DD` section — don't
   duplicate.
-- If no session-log entries exist for today, just ask Nick directly
+- If neither source has anything for today, just ask Nick directly
   what he learned today instead of presenting an empty candidate list.
+- Transcripts can be long even after stripping tool noise — if a
+  day's output from the script is large, prioritize sessions that read
+  as substantive/explanatory over short or purely operational ones
+  rather than reading everything in exhaustive depth.
 
 **Output:** Updated `## YYYY-MM-DD` section in `log.md` with the final,
 Nick-approved bullets.
@@ -103,8 +118,12 @@ written. Group by section, keep each bullet as-is.
   convention — the whole point is one running file. See
   `Operations Team/TEAM.md`.
 - **Don't invent learnings.** Every bullet must trace to something Nick
-  actually said or a real session-log entry — never pad the log to
-  make a day look more productive than it was.
+  actually said, a real session-log entry, or a real transcript
+  exchange — never pad the log to make a day look more productive than
+  it was.
+- **Transcripts are read-only.** `extract_transcripts.py` only reads
+  `~/.claude/projects/**/*.jsonl` — never write to, move, or delete a
+  transcript file.
 - **Keep bullets short** — one line, no sub-bullets. If something needs
   more depth, that belongs in `HQ/memory.md` or a project doc, not here.
 - **Update memory** — if Nick corrects the format or flags a recurring
