@@ -6,6 +6,13 @@ end-of-day recap pass. Two ways out: on-request retrieval, and an
 automatic feed into the morning briefing so Nick can pick up where he
 left off.
 
+**Fast path:** the global `/recap` command (`~/.claude/commands/recap.md`)
+routes directly here from any directory without needing the full
+`HQ/CLAUDE.md` → `TEAM.md` read chain — `/recap log [...]` for manual
+capture, `/recap today` for the daily recap pass, bare `/recap` for
+retrieval. Natural-language phrasing via the routing guide below still
+works too.
+
 ---
 
 ## Files to Read on Startup

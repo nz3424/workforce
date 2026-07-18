@@ -70,9 +70,9 @@ Examples:
 | "Help me plan this week" | Weekly Review |
 | "What do I say at standup?" | Standup Prep |
 | "Generate my standup for today" | Standup Prep |
-| "Log: [what I learned]" | Learning Log |
-| "Daily recap" / "What did I learn today?" | Learning Log |
-| "What did I learn recently?" / "Catch me up" | Learning Log |
+| "Log: [what I learned]" / `/recap log [...]` | Learning Log |
+| "Daily recap" / "What did I learn today?" / `/recap today` | Learning Log |
+| "What did I learn recently?" / "Catch me up" / `/recap` | Learning Log |
 
 ---
 
