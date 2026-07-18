@@ -22,6 +22,7 @@ format Nick can act on in under 2 minutes.
 | Task Planner | `agents/task-planner/` | Adds, sweeps, and surfaces tasks in Notion |
 | Weekly Review | `agents/weekly-review/` | Sunday planning digest — week behind, week ahead, open threads |
 | Standup Prep | `agents/standup-prep/` | Generates daily standup summary for the new job |
+| Learning Log | `agents/learning-log/` | Running log of what Nick learned each day; captures, recaps, and resurfaces it |
 
 ---
 
@@ -35,6 +36,7 @@ format Nick can act on in under 2 minutes.
 | **Propose, don't act** | Never modify calendar or send messages without Nick's approval |
 | **Confirm before writing** | Task Planner must show a preview before committing sweep results to Notion |
 | **Save outputs** | Persistent outputs go to `Operations Team/outputs/` |
+| **Exception: Learning Log** | Learning Log does not use `outputs/` or the per-day naming below — it maintains one running file, `agents/learning-log/log.md` |
 
 ---
 
@@ -68,6 +70,9 @@ Examples:
 | "Help me plan this week" | Weekly Review |
 | "What do I say at standup?" | Standup Prep |
 | "Generate my standup for today" | Standup Prep |
+| "Log: [what I learned]" | Learning Log |
+| "Daily recap" / "What did I learn today?" | Learning Log |
+| "What did I learn recently?" / "Catch me up" | Learning Log |
 
 ---
 

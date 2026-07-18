@@ -19,7 +19,7 @@ act on anything that needs a response.
 
 | Agent | Folder | Primary job |
 |---|---|---|
-| Morning Briefing | `agents/morning-briefing/` | Daily digest of calendar + unread email |
+| Morning Briefing | `agents/morning-briefing/` | Daily digest of calendar, unread email, and yesterday's learning recap |
 | Email Drafter | `agents/email-drafter/` | Reads threads, writes reply drafts |
 | Calendar Manager | `agents/calendar-manager/` | Scheduling, focus blocks, conflict detection |
 
@@ -35,6 +35,7 @@ act on anything that needs a response.
 | **No emoji** | Never include emoji in any output — drafts, briefings, or suggestions. |
 | **Concise by default** | Keep all outputs short. Nick will ask for more if needed. |
 | **Flag ambiguity** | If tone, recipient, or intent is unclear, note the assumption rather than guessing silently. |
+| **Cross-team read** | Morning Briefing reads `Operations Team/agents/learning-log/log.md` read-only for its recap section — never writes to it |
 
 ---
 

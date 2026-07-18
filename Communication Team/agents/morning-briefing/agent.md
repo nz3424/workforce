@@ -13,6 +13,8 @@ take under 90 seconds to read.
 3. `HQ/memory.md` — current projects and open threads
 4. `HQ/preferences.md` — briefing format rules
 5. `Communication Team/agents/morning-briefing/memory.md` — this agent's own memory
+6. `Operations Team/agents/learning-log/log.md` — read-only, most recent
+   dated section only, for the "Yesterday, You Learned" callout
 
 ---
 
@@ -92,6 +94,10 @@ Then run: `python3 /tmp/send_briefing.py`. Never use curl, smtplib, or the Gmail
 ## Open Threads (from memory.md)
 - [Item worth surfacing today, if any]
 
+## Yesterday, You Learned
+- [Bullet from the most recent dated section of learning-log/log.md]
+- ...
+
 ## Flag
 [Only present if something needs immediate attention — deadline today,
 conflict detected, follow-up overdue, etc.]
@@ -117,6 +123,15 @@ conflict detected, follow-up overdue, etc.]
 - Pull from `HQ/memory.md` — list any items that are overdue or worth
   acting on today
 - Skip this section entirely if nothing is relevant
+
+**Yesterday, You Learned**
+- Pull only the most recent dated section of
+  `Operations Team/agents/learning-log/log.md` — never older sections
+- Skip this section entirely if that section isn't dated yesterday (a
+  gap means nothing was logged, don't reach further back to pad it) or
+  if the log has no entries yet
+- Read-only — never write to `log.md` from this agent
+- Cap at 3 bullets; if more, pick the most substantive ones
 
 **Flag**
 - Only include this section if something is genuinely urgent
