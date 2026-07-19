@@ -5,7 +5,7 @@ Sync the Workforce repo to GitHub. Follow these steps exactly:
 ## Step 0 — Pin to repo root
 Before running any git command, resolve the actual repo root:
 ```
-REPO=$(git -C /Users/nzhu/Documents/Claude/Projects/Workforce rev-parse --show-toplevel)
+REPO=$(git -C /Users/nzhu/ClaudeProjects/Workforce rev-parse --show-toplevel)
 ```
 Run ALL subsequent git commands as `git -C "$REPO" <command>` to ensure
 you're always operating on the real working directory, not a worktree
