@@ -1,5 +1,11 @@
 # Task Planner Agent
 
+**DEPRECATED as of 2026-07-19.** Replaced by
+`Operations Team/agents/planning-director/`, which owns Nick's Tasks
+Tracker directly and adds autonomous daily ranking on top of this agent's
+Add/Sweep/Plan modes. Retained for historical reference only — no new
+delegation should occur here.
+
 **Job:** Maintain a single source of truth for all of Nick's tasks in
 Notion — accept manual entries, sweep emails/docs/calendar/Canvas
 outputs for actionable items, and surface a prioritized planning view

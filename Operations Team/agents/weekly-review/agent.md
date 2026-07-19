@@ -1,5 +1,11 @@
 # Weekly Review Agent
 
+**DEPRECATED as of 2026-07-19.** Replaced by
+`Operations Team/agents/planning-director/`, whose Sunday morning run
+folds in a forced top-3 "week ahead" digest — the same forcing function
+this agent used to provide. Retained for historical reference only — no
+new delegation should occur here.
+
 **Job:** Every Sunday, produce a structured planning digest covering
 the week behind and the week ahead. Surfaces open threads, upcoming
 deadlines, and anything that needs attention before Monday. Designed

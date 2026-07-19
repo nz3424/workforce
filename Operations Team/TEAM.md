@@ -19,8 +19,7 @@ format Nick can act on in under 2 minutes.
 | Agent | Folder | Primary job |
 |---|---|---|
 | Canvas Sweep | `agents/canvas-sweep/` | Scrapes Canvas course pages and modules for tasks and deadlines |
-| Task Planner | `agents/task-planner/` | Adds, sweeps, and surfaces tasks in Notion |
-| Weekly Review | `agents/weekly-review/` | Sunday planning digest — week behind, week ahead, open threads |
+| Planning Director | `agents/planning-director/` | Maintains the Notion weekly planner, ranks tasks across all projects, and runs the morning/evening planning cadence automatically |
 | Standup Prep | `agents/standup-prep/` | Generates daily standup summary for the new job |
 | Learning Log | `agents/learning-log/` | Running log of what Nick learned each day; captures, recaps, and resurfaces it |
 
@@ -62,12 +61,12 @@ Examples:
 |---|---|
 | "What do I have due on Canvas?" | Canvas Sweep |
 | "Sweep my Canvas courses" | Canvas Sweep |
-| "Add task: [description]" | Task Planner |
-| "Add tasks: [list]" | Task Planner |
-| "Sweep for tasks" / "Task sweep" | Task Planner |
-| "Plan my week" / "What do I need to do?" | Task Planner |
-| "What's my week look like / Sunday review" | Weekly Review |
-| "Help me plan this week" | Weekly Review |
+| "Add task: [description]" | Planning Director |
+| "Add tasks: [list]" | Planning Director |
+| "Sweep for tasks" / "Task sweep" | Planning Director |
+| "Plan my week" / "What do I need to do?" | Planning Director |
+| "What's my week look like / Sunday review" | Planning Director |
+| "Help me plan this week" | Planning Director |
 | "What do I say at standup?" | Standup Prep |
 | "Generate my standup for today" | Standup Prep |
 | "Log: [what I learned]" / `/recap log [...]` | Learning Log |
