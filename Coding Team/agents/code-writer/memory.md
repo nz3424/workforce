@@ -1,2 +1,4 @@
 # Code Writer Memory
 _Append-only log. One entry per run._
+
+- 2026-07-06 — anagrams-2 (~/Desktop/ReactProjects/anagrams-2): dockerized for Day 2 Docker/compose practice. Added server/schema.sql, server/Dockerfile.dev, am-client/Dockerfile.dev, docker-compose.yml (db+api+client, dev mode with bind mounts + anonymous node_modules volumes). Found and fixed pre-existing bugs unrelated to Docker: server/package.json was missing dotenv, jsonwebtoken, and mysql2 despite index.js importing them (app would have crashed on `npm start` locally too). Verified full stack end-to-end via real browser signup/login flow. Nick prefers pairing style: he writes Dockerfiles himself (2 reps) while I write/explain compose service blocks, then we test claims with real docker builds/runs rather than reasoning alone.

@@ -9,9 +9,18 @@
 
 - **Name:** Nick Zhu
 - **Email:** nicholaszhu14@gmail.com
-- **Status:** Recent college graduate, transitioning into a full-time Software
-  Engineering role (as of May 2026)
-- **Location:** TBD — update once settled after graduation
+- **Status:** Senior Venture Associate, Engineering at Link Ventures (a VC
+  that runs a startup studio) — starts Monday, August 3, 2026. Role is
+  broader than one project: building out cool ideas from the firm's
+  founder, and internal tools to help/embed with studio startups. First
+  project (not the whole role): training an LLM with ternary weight
+  quantization (BitNet b1.58-style) — company's broader bet is using ternary
+  weights (matmul → integer addition, no multiplication) to make photonics
+  the primary compute substrate instead of GPUs; could spin off into its own
+  startup if it pans out. Also building internal tooling (agent loops,
+  sandboxing, Docker/AWS deployment) — e.g. deal-flow research agents,
+  CRM/portfolio sync, reporting automation
+- **Location:** Cambridge, MA (in-office)
 
 ---
 
@@ -19,7 +28,11 @@
 
 These are in priority order. When in doubt about what matters, refer here.
 
-1. **Land strong at my new job** — ramp up fast on the codebase, make a strong
+1. **Land strong at Link Ventures** — ramp up fast across the role: building
+   out the founder's ideas (first up: LLM training + ternary weight
+   quantization, BitNet b1.58-style — possible startup spinout), internal
+   tools that help/embed with studio startups, and agent tooling (agent
+   loops/harnessing, sandboxing, Docker, AWS deployment); make a strong
    early impression, ask good questions, ship early wins
 2. **Stay organized** — keep tasks tracked, don't drop balls, do a weekly
    review every Sunday to prepare for the week ahead

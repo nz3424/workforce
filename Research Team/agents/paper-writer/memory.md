@@ -21,6 +21,7 @@
 
 2026-05-07 — How Large Language Models Work — Standard (~8pp) — Research Team/papers/2026-05-07_how-llms-work.tex
 - 2026-05-08: Wrote paper "Productive Agent Systems" covering automated usage, memory best practices, and skill-driven productivity.
+2026-06-02 — Orchestrator Agents — Standard (17pp) — Research Team/papers/2026-06-02_orchestrator-agents.{tex,bib,pdf}
 
 ---
 
