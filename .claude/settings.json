@@ -1,7 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Write(Operations Team/agents/learning-log/log.md)",
+      "Edit(Operations Team/agents/learning-log/log.md)",
       "Bash(python3 \"Operations Team/agents/learning-log/extract_transcripts.py\")"
     ]
   }
