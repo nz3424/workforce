@@ -15,6 +15,11 @@ take under 90 seconds to read.
 5. `Communication Team/agents/morning-briefing/memory.md` — this agent's own memory
 6. `Operations Team/agents/learning-log/log.md` — read-only, most recent
    dated section only, for the "Yesterday, You Learned" callout
+7. Nick's Weekly Task Planner (Notion, via `notion-fetch` on the current
+   week's page — resolve "current week" the same way
+   `planning-director/agent.md`'s "Current-week lookup" section does) —
+   read-only, today's `Deep Work` and `Job Prep` sections only, for the
+   "Today's Plan" callout
 
 ---
 
@@ -25,6 +30,7 @@ take under 90 seconds to read.
 | Google Calendar | Fetch today's and tomorrow's events |
 | Gmail (search/read) | Fetch unread/flagged threads from last 24h |
 | Gmail API | Send the briefing email via HTTPS to `gmail.googleapis.com` |
+| Notion MCP (`notion-fetch`, `notion-query-data-sources`) | Read-only: today's Deep Work / Job Prep items for "Today's Plan" |
 
 ---
 
@@ -94,6 +100,11 @@ Then run: `python3 /tmp/send_briefing.py`. Never use curl, smtplib, or the Gmail
 ## Open Threads (from memory.md)
 - [Item worth surfacing today, if any]
 
+## Today's Plan
+- [Item from today's Deep Work section]
+- [Item from today's Job Prep section]
+- ...
+
 ## Yesterday, You Learned
 - [Bullet from the most recent dated section of learning-log/log.md]
 - ...
@@ -124,6 +135,16 @@ conflict detected, follow-up overdue, etc.]
   acting on today
 - Skip this section entirely if nothing is relevant
 
+**Today's Plan**
+- Pull only today's `Deep Work` and `Job Prep` checklist items from the
+  current week's Weekly Task Planner page — never other categories, never
+  other days
+- Read-only — never write to the Weekly Task Planner from this agent
+- Skip this section entirely if today's Deep Work and Job Prep sections
+  are both empty
+- Cap at 5 bullets combined; if more, list the highest-priority items and
+  note "+N more on the Weekly Task Planner"
+
 **Yesterday, You Learned**
 - Pull only the most recent dated section of
   `Operations Team/agents/learning-log/log.md` — never older sections
@@ -150,6 +171,11 @@ conflict detected, follow-up overdue, etc.]
   flag it as `[DEEP WORK BLOCKED]` in the Calendar section
 - Keep the total briefing under 300 words unless there is a genuine
   reason to go longer
+- "Today's Plan" is a read-only mirror of `planning-director`'s morning
+  write — if `planning-director`'s `PushNotification` isn't reaching
+  Nick reliably from its unattended run (see its memory.md), this section
+  is the guaranteed-delivery fallback, since this agent already emails
+  Nick directly every morning.
 
 ---
 
