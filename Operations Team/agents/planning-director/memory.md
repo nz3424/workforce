@@ -45,7 +45,7 @@
 <!-- One line per Add / Sweep / Auto-Morning / Auto-Evening run. -->
 <!-- Format: Date Time — Mode — outcome -->
 
-*(no entries yet)*
+- 2026-07-20 — Auto-Morning — wrote 3 Deep Work items to Week of Jul 20 (2026-W30), Monday: "Ideate on a full-stack project to build and deploy" [UNCLEAR project — no Project/Area set], "Connect Google Calendar to Hermes" [Hermes], "Connect Gmail to Hermes" [Hermes]. Calendar bandwidth: only an all-day event today, treated as <2h booked → top 3 selected. Noted a stray "test task — delete me after verifying" row in Tasks Tracker (score too low to surface in Deep Work, but likely leftover debug data — flagged for Nick).
 
 ---
 
