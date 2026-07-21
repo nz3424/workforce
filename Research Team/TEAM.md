@@ -19,7 +19,7 @@ with sources he can follow up on if he wants more depth.
 | Agent | Folder | Primary job |
 |---|---|---|
 | Researcher | `agents/researcher/` | Deep-dive research reports on any topic |
-| Summarizer | `agents/summarizer/` | Condenses articles, docs, and papers into structured summaries |
+| Summarizer | `agents/summarizer/` | Condenses articles, docs, papers, reports, long pasted text, and past Claude Code transcripts into structured summaries |
 | Tech Radar | `agents/tech-radar/` | Tracks tools, libraries, and trends in Nick's areas of interest |
 | Paper Writer | `agents/paper-writer/` | Writes LaTeX research papers on any topic; outputs `.tex` + `.bib` |
 
@@ -76,8 +76,10 @@ From `HQ/preferences.md`:
 |---|---|
 | "Research [topic] for me" | Researcher |
 | "What is [technology/concept]?" | Researcher |
-| "Summarize this article / doc / paper" | Summarizer |
+| "Summarize this article / doc / paper / report" | Summarizer |
 | "Give me the key points from [URL/text]" | Summarizer |
+| "Recap what we've discussed about [topic] over the last N days" | Summarizer (topic-scoped, not the daily log — see below) |
+| "What did I learn today?" / "Catch me up" | **Not Summarizer** — learning-log (`/recap`), see `Operations Team/agents/learning-log/agent.md` |
 | "What's new in [area] this week/month?" | Tech Radar |
 | "Should I look into [tool/library]?" | Tech Radar |
 | "Write a paper on [topic]" | Paper Writer |
