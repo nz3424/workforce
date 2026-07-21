@@ -208,21 +208,49 @@ consistent with "no execution tools" rather than an oversight.
    `list_events` attendance — if the event existed on today's calendar,
    treat it as done even if the box wasn't checked.
 3. **Leftover items** — anything still unchecked with no passive signal:
-   collect them into a short list.
+   collect them into a short list, noting each item's category and whether
+   it maps to an open Tasks Tracker row.
 4. **If the leftover list is non-empty**, ask Nick directly (this is the
    one interactive moment in the unattended evening run — if nobody
-   responds because it's truly unattended, leave those items as unchecked
-   and carried, don't block): "No signal on: [item], [item] — done or
-   not?" Apply whatever response comes back; if none comes back in this
-   run, leave them unchecked (they'll be picked up again by tomorrow's
-   ranking pass, which reads current Notion state fresh each time).
-5. Items still unchecked at the end of this mode remain on today's
-   section as-is (the additive model means nothing gets deleted) — tomorrow
-   morning's Ranking pass will naturally re-score and may re-select them.
-6. No notification is sent for a normal Auto-Evening run — this is a
-   quiet reconciliation pass, consistent with how `learning-log`'s
-   unattended `/recap auto` also stays quiet (output only reaches a log
-   file, not Nick directly).
+   responds because it's truly unattended, don't block): "No signal on:
+   [item], [item] — done or not?" Apply whatever response comes back (mark
+   done / leave). Any item still unchecked after this — including all of
+   them when nobody replies — goes through the funnel in step 5.
+5. **Carry-forward funnel** — for each still-unchecked leftover, decide
+   whether to move it into the current week's `## Backlog` so tomorrow's
+   Ranking pass (and week-to-week Rollover) can re-surface it. Move, don't
+   copy: delete the line from today's section and append it to `## Backlog`
+   via a targeted `update_content` edit (same anchoring discipline as Add
+   mode). Apply these gates in order; the first that matches wins:
+   - **Fitness items → never funnel.** Leave in place. A missed workout is
+     day-specific; carrying it forward is noise.
+   - **Already carried by a Tasks Tracker row → don't funnel.** If the item
+     maps to an open (`Status` ≠ `Done`) Tasks Tracker row, that row is
+     already re-scored by tomorrow's Ranking pass — funneling would create a
+     duplicate. Leave it in place.
+   - **Date-guard → don't funnel.** If the item names a specific date, time,
+     or fixed calendar event (e.g. `Amtrak 112 … 9:11 AM (Fri)`,
+     `standup 3pm`), it's either done or moot once its moment passes. Leave
+     it in place.
+   - **Persistence judgment** (the remaining Deep Work / Job Prep / Personal
+     / Chores items): funnel only the ones that stay valid on any later day.
+     Test: "would this still be a sensible to-do if Nick saw it next
+     Tuesday?" Durable, reusable actions — `Set up rent payment account`,
+     `Buy [X] subscription`, `Write capstone README`, `Draft cover letter` —
+     → move to `## Backlog`. Ephemeral one-offs tied to a day that has now
+     passed or been superseded → leave in place, don't clutter Backlog.
+   Don't add a `<!-- carried:N -->` marker here — that counter belongs to
+   week-to-week Rollover, which adds it the first time a Backlog item
+   survives a week boundary.
+6. Items left in place by step 5 stay on today's section as-is (the
+   additive model means nothing gets deleted). Tomorrow's Ranking pass
+   re-scores anything that is a Tasks Tracker row or a Backlog item; purely
+   in-place day items simply remain as a quiet record.
+7. No notification is sent for a normal Auto-Evening run — this is a quiet
+   reconciliation pass, consistent with how `learning-log`'s unattended
+   `/recap auto` also stays quiet (output only reaches a log file, not Nick
+   directly). Do still append the usual one-line `memory.md` entry, and name
+   any items funneled to Backlog in it so there is an audit trail.
 
 ---
 
