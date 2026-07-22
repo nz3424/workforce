@@ -13,8 +13,12 @@ take under 90 seconds to read.
 3. `HQ/memory.md` — current projects and open threads
 4. `HQ/preferences.md` — briefing format rules
 5. `Communication Team/agents/morning-briefing/memory.md` — this agent's own memory
-6. `Operations Team/agents/learning-log/log.md` — read-only, most recent
-   dated section only, for the "Yesterday, You Learned" callout
+6. **Learning Log** Notion database (data source
+   `collection://e0fa7eac-d4e3-4c17-aaa1-8ada7081c6b7`) — read-only, the
+   single row where `Date` = yesterday, for the "Yesterday, You Learned"
+   callout. (This replaces the old local `log.md` read — the recap pass
+   mirrors each day here precisely because this agent, as a cloud task,
+   can't see local files. Never read `log.md` for this.)
 7. Nick's Weekly Task Planner (Notion, via `notion-fetch` on the current
    week's page — resolve "current week" the same way
    `planning-director/agent.md`'s "Current-week lookup" section does) —
@@ -30,7 +34,7 @@ take under 90 seconds to read.
 | Google Calendar | Fetch today's and tomorrow's events |
 | Gmail (search/read) | Fetch unread/flagged threads from last 24h |
 | Gmail API | Send the briefing email via HTTPS to `gmail.googleapis.com` |
-| Notion MCP (`notion-fetch`, `notion-query-data-sources`) | Read-only: today's Deep Work / Job Prep items for "Today's Plan" |
+| Notion MCP (`notion-fetch`, `notion-query-data-sources`) | Read-only: today's Deep Work / Job Prep items for "Today's Plan", and yesterday's row of the Learning Log DB for "Yesterday, You Learned" |
 
 ---
 
@@ -146,13 +150,17 @@ conflict detected, follow-up overdue, etc.]
   note "+N more on the Weekly Task Planner"
 
 **Yesterday, You Learned**
-- Pull only the most recent dated section of
-  `Operations Team/agents/learning-log/log.md` — never older sections
-- Skip this section entirely if that section isn't dated yesterday (a
-  gap means nothing was logged, don't reach further back to pad it) or
-  if the log has no entries yet
-- Read-only — never write to `log.md` from this agent
-- Cap at 3 bullets; if more, pick the most substantive ones
+- Query the **Learning Log** Notion database for the single row where
+  `Date` = yesterday:
+  `SELECT "Day", url FROM "collection://e0fa7eac-d4e3-4c17-aaa1-8ada7081c6b7" WHERE date("date:Date:start") = date('<yesterday YYYY-MM-DD>')`.
+  If it returns a row, `notion-fetch` that row's URL and use the bullets
+  in its page body.
+- Skip this section entirely if the query returns no row for yesterday (a
+  gap means nothing was logged — don't reach back to an older day to pad
+  it) or if the database is empty.
+- Read-only — never write to the Learning Log DB or `log.md` from this
+  agent. `log.md` is not read at all anymore.
+- Cap at 3 bullets; if more, pick the most substantive ones.
 
 **Flag**
 - Only include this section if something is genuinely urgent

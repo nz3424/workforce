@@ -55,3 +55,11 @@
 - [llm-training] Stopping an EC2 instance halts the compute charge but the EBS root volume keeps billing regardless of instance state, and an Elastic IP is only free while attached to a *running* instance — a stopped instance's EIP starts costing.
 - [llm-training] A GitHub deploy key meant to be read-only was actually registered write-enabled (the "Allow write access" box was left checked at setup) — the safety property the design relied on never held until audited; verify a key's real scope on GitHub rather than trusting the setup doc.
 <!-- last-recap-pass: 2026-07-20T23:59:00 -->
+
+## 2026-07-21
+- [Workforce/Automation] Root-caused the missing morning-briefing recap: the nightly `/recap auto` resolved "today" from its own clock mid-run and drifted past midnight, so it recapped the wrong/empty day — the durable fix is capturing the target date atomically in the wrapper at invocation and never re-deriving it in-session.
+- [Workforce/Automation] launchd won't reliably run a missed nightly fire (Mac off at 23:55 = that night skipped; asleep = job runs on wake under a later date), so the recap pass has to own the whole backlog since the last watermark and self-heal gaps via multi-day catch-up rather than assuming one clean run per night.
+- [Workforce] planning-director's Ranking only scans Tasks Tracker rows + Backlog, so non-Tracker one-offs (Job Prep/Personal/Chores and hand-added Deep Work lines) had no daily carry mechanism — closed with a scoped Auto-Evening carry-forward funnel (ordered gates: Fitness excluded → Tracker-backed excluded → date-guard → persistence judgment → durable leftovers to Backlog).
+- [link-ventures-prep] A targeted `terraform destroy -target` can still cascade beyond the listed resources because the real blast radius comes from stale `dependencies` baked into `.tfstate`, not the command — inspecting tfstate and using `state rm`/`import` to strip stale deps (and running `terraform plan` first) is what actually bounds the destroy.
+- [link-ventures-prep] To pause an AWS stack for cost without downing the frontend: scale ECS→0 + stop RDS to halt compute billing, and decouple CloudFront from the ALB in state so `destroy` removes only ALB/ECS — while watching for a `task_definition` :3→:1 revision-rollback trap on resume.
+<!-- last-recap-pass: 2026-07-21T23:59:00 -->
