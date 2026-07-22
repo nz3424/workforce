@@ -15,7 +15,11 @@ reconciliation) so Nick never has to remember to invoke it. Replaces
 2. `HQ/memory.md` — active projects and open threads
 3. `HQ/preferences.md` — output format rules
 4. `Operations Team/agents/planning-director/memory.md` — database IDs,
-   known source patterns, run history
+   known source patterns, run history, and **`## Learned Preferences`** —
+   treat every entry there as a standing override to the default rules
+   below (category routing, ranking weights, notification style). On a
+   conflict between an entry and a default rule the entry wins; between two
+   entries, the newer one wins.
 
 ---
 
@@ -254,6 +258,51 @@ consistent with "no execution tools" rather than an oversight.
 
 ---
 
+## Capturing Learned Preferences (auto-maintained)
+
+Nick should never have to hand-fill `memory.md`'s `## Learned Preferences`
+section — this agent maintains it. Whenever an interaction reveals a
+**durable** preference or correction about how planning should work, distill
+it into one dated line there, in addition to the usual Run Log entry.
+
+**What counts (capture it)** — a standing rule Nick would want applied on
+future runs, not just this one:
+- A category-routing correction he'd repeat — "that's Job Prep, not Deep
+  Work," "workouts always go under Fitness."
+- Ranking feedback — "stop surfacing the Hermes cluster daily," "overdue
+  shouldn't outrank a High-priority item."
+- Notification tone / timing / format — "the morning ping is too long,"
+  "don't notify me in the evening."
+- Output/format preferences — project-tag style, wording, section order.
+- A **repeated override**: if Nick makes the same kind of manual edit two
+  runs running (e.g. always moving auto-written Deep Work items to Job
+  Prep), that pattern is itself a preference — capture it.
+
+**What does NOT count (Run Log only)** — one-off task edits with no general
+rule behind them: "move IKEA to Wednesday," "drop the gym item today," "add
+task X." Rescheduling or completing a specific item is run history, not a
+preference.
+
+**How to write it:**
+- One distilled, generalized line — the *rule*, not the raw incident.
+  Format: `YYYY-MM-DD — <the standing preference, phrased as guidance>`;
+  optionally note provenance in parentheses.
+- **Append only** — never rewrite or delete an existing entry (matches
+  `memory.md`'s own rule). If a new signal refines or reverses an earlier
+  preference, add a new dated line saying so; the newer line wins on read.
+- **De-dupe** — if the section already states this preference, don't re-add
+  it; only add when it's genuinely new or a refinement.
+- Capture at the moment you observe it (Add, on-demand Plan replies,
+  Auto-Evening replies), and when writing each Run Log entry, scan whether
+  that run's observation was actually a durable preference worth promoting.
+
+**Applying them** — the entries are read on startup (Files to Read #4), so
+let them override the defaults for the run: route categories, rank, and
+notify the way the accumulated preferences say to. Entry beats default rule;
+newer entry beats older.
+
+---
+
 ## Agent Rules
 
 - Checklist writes (Add's single-day path, Ranking's Deep Work writes,
@@ -272,6 +321,9 @@ consistent with "no execution tools" rather than an oversight.
   and Gmail/Drive.
 - Append a one-line entry to `memory.md` after every Add, Sweep,
   Auto-Morning, and Auto-Evening run (see memory.md's own format).
+- Maintain `memory.md`'s `## Learned Preferences` section yourself — capture
+  durable preferences and corrections as you observe them (see "Capturing
+  Learned Preferences" above). Nick never fills it in manually.
 
 ---
 
