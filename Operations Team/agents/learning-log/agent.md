@@ -35,7 +35,14 @@ works too.
 
 ## Tools
 
-None required. This agent only reads/writes local markdown files.
+| Tool | Used for |
+|---|---|
+| Local markdown (Read/Edit) | `log.md` is the canonical store — all reads/writes/watermarks |
+| Notion MCP (`notion-query-data-sources`, `notion-create-pages`, `notion-update-page`) | Mirror each recapped day to the **Learning Log** database so the cloud morning briefing can read it (see "Notion Mirror" below) |
+
+The mirror is the only reason this agent touches the network. `log.md`
+stays authoritative; Notion is a downstream copy. A manual `/recap log`
+capture needs no tools — it's a local one-liner.
 
 ---
 
@@ -191,6 +198,51 @@ the next run knows exactly how far back the backlog reaches.
   advance that date's watermark — nothing changed, so there's nothing new
   to bound, and the catch-up low-water mark stays where it was.
 
+### Notion Mirror (Learning Log database) — Daily recap and Automated recap only
+
+The morning briefing runs as a cloud task with **no local-filesystem or
+working-tree access** — it reads the repo only from what's pushed to
+GitHub, so a section written locally to `log.md` is invisible to it until
+(and unless) someone commits and pushes. To make the day's learnings
+reliably available to the briefing every morning, each recap pass mirrors
+every date it writes into a Notion database in the **same run**:
+
+- **Database:** "Learning Log", data source
+  `collection://e0fa7eac-d4e3-4c17-aaa1-8ada7081c6b7`
+  (database id `2b1239dd-e808-4aff-a593-d4ae42680366`). One row per day:
+  `Day` (title = the `YYYY-MM-DD` string), `Date` (date property, what the
+  briefing filters on), and the day's bullets as the row's page **body**
+  (a `- ` bulleted list, verbatim from that date's `log.md` section).
+- **`log.md` stays canonical.** Notion is a downstream copy for the
+  briefing's read path only — never read learnings back from Notion, never
+  treat a Notion row as the source of truth, never resolve the watermark
+  from Notion. The watermark lives only in `log.md`.
+- **When to mirror:** after finishing a date's `log.md` section in a Daily
+  recap or Automated recap pass (i.e. right after stamping that date's
+  watermark), upsert that date to the Learning Log DB:
+  1. Query for an existing row:
+     `SELECT url FROM "collection://e0fa7eac-d4e3-4c17-aaa1-8ada7081c6b7" WHERE date("date:Date:start") = date('YYYY-MM-DD')`.
+  2. **No row →** `notion-create-pages` into the data source: `Day` = the
+     date string, `date:Date:start` = the date, `date:Date:is_datetime` =
+     `0`, body = the date's **complete** current bullet set from `log.md`.
+  3. **Row exists** (a later same-day pass, or a catch-up re-run) →
+     `notion-update-page` with `replace_content` to the date's complete
+     current bullet set. Never create a second row for a date.
+- **Mirror the whole day, including manual bullets.** The body is always
+  the full current `## YYYY-MM-DD` section (manual captures + recap
+  bullets), so mid-day `/recap log` entries reach Notion via the next
+  pass's mirror. A date whose section exists with ≥1 bullet but got no new
+  recap candidates this pass should still be mirrored/upserted if it isn't
+  in Notion yet — don't let a manual-only day fall through.
+- **Fail loud.** If any Notion call errors (auth, rate limit, network),
+  print a clear `WARNING: Notion mirror failed for YYYY-MM-DD: <reason>`
+  to stdout so it lands in `recap-cron.log`. `log.md` is already written
+  and correct, so the run is not lost — but the warning tells us the
+  briefing may be stale until the next successful mirror. Do **not** report
+  a clean run when the mirror failed.
+- **Manual capture (mode 1) does not mirror inline** — it stays a local
+  one-line ack; the day reaches Notion on the next recap pass.
+
 ### 4. Retrieval
 **Input:** "What did I learn recently?", "Catch me up", "Where did I
 leave off?"
@@ -243,7 +295,13 @@ written. Group by section, keep each bullet as-is.
 
 ## Integration: Morning Briefing
 
-`Communication Team/agents/morning-briefing/agent.md` reads the most
-recent dated section of this log (read-only) and surfaces it as a
-"Yesterday, You Learned" section, so the recap resurfaces automatically
-without Nick having to ask. See that agent's spec for details.
+`Communication Team/agents/morning-briefing/agent.md` surfaces a
+"Yesterday, You Learned" section so the recap resurfaces automatically
+without Nick having to ask. It reads **the Learning Log Notion database**
+(row where `Date` = yesterday), **not** `log.md` — because the briefing is
+a cloud task with no local-file access. That's exactly why this agent
+mirrors each recapped day to Notion (see "Notion Mirror" above): the
+mirror is the hand-off between the recap's local write and the briefing's
+cloud read. If the mirror lags, the briefing silently loses that section,
+so a failed mirror is a loud warning, never a quiet skip. See that agent's
+spec for the read details.
